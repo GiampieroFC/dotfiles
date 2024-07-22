@@ -86,7 +86,6 @@ source $ZSH/oh-my-zsh.sh
 source <(fzf --zsh)
 alias cd="z"
 
-alias rm="rip"
 # Changing "exa" to "eza"
 
 alias ls="eza -lh --icons --color=always --group-directories-first"
@@ -97,6 +96,9 @@ alias lt="eza -lhT --level=3 --icons --color=always --group-directories-first"
 #
 
 alias upt="sudo pacman -Syu --noconfirm && yay -Syu --answerclean All --answerdiff None --removemake --cleanafter && yay --sysupgrade --answerclean All --answerdiff None --cleanafter --removemake && sudo pacman -Syyu --noconfirm && sudo pacman -Rs $(pacman -Qdtq) --noconfirm && yay -Yc"
+
+alias poff="systemctl poweroff"
+alias reboot="systemctl reboot"
 
 # User configuration
 
@@ -124,10 +126,10 @@ export ARCHFLAGS="-arch x86_64"
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="code ~/.zshrc"
-alias reinit="source ~/.zshrc"
-alias ohmyzsh="code ~/.oh-my-zsh"
-alias weztermconfig="code ~/.config/wezterm/"
+alias zshconfig="lvim ~/.zshrc"
+alias rzsh="source ~/.zshrc"
+alias ohmyzsh="lvim ~/.oh-my-zsh"
+alias weztermconfig="lvim ~/.config/wezterm/"
 alias wallpapers="dolphin ~/Descargas/wallpapers"
 # pnpm
 export PNPM_HOME="/home/giamp/.local/share/pnpm"
@@ -137,8 +139,27 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-
 # buscar paquetes:
+function rm() {
+     # Verifica si se proporcionaron argumentos
+    if [ $# -eq 0 ]; then
+        echo "Usage: rm <file> [...<file>]"
+        return 1
+    fi    
+
+    # Itera sobre cada argumento proporcionado
+    for file in "$@"; do
+        if [ -e "$file" ]; then
+            # Mueve el archivo al directorio de destino
+            mv "$file" -t ~/.deleted/ 
+            echo "Deleted '$file' (moved to ~/.deleted/)"
+        else
+            echo "Error: '$file' not found"
+        fi
+    done
+
+}
+
 
 function Ss() {
     if [ -z "$1" ]; then
