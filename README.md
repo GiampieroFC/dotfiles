@@ -1,2 +1,4 @@
+
 # dotfiles
-Personal dotfiles (zsh, wezterm, lazyVim...)
+
+Personal dotfiles (zsh, wezterm, nvim...)
