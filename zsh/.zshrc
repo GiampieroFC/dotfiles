@@ -126,10 +126,10 @@ export ARCHFLAGS="-arch x86_64"
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="lvim ~/.zshrc"
+alias zshconfig="code ~/.zshrc"
 alias rzsh="source ~/.zshrc"
-alias ohmyzsh="lvim ~/.oh-my-zsh"
-alias weztermconfig="lvim ~/.config/wezterm/"
+alias ohmyzsh="code ~/.oh-my-zsh"
+alias weztermconfig="code ~/.config/wezterm/"
 alias wallpapers="dolphin ~/Descargas/wallpapers"
 # pnpm
 export PNPM_HOME="/home/giamp/.local/share/pnpm"
