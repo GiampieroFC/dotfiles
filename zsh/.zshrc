@@ -8,6 +8,15 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.local/share/bob/nvim-bin:$PATH
 
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+export PATH=$PATH:/home/giamp/Learning/Lua/my-first-project/lua_modules/bin
+export LUA_PATH="./lua_modules/share/lua/5.4/?.lua;./src/?.lua;./src/?/init.lua;;"
+export LUA_CPATH="./lua_modules/lib/lua/5.4/?.so;./src/?.lua;./src/?/init.so;;"
+
+# My own bins 🔴
+export PATH=$PATH:/home/giamp/bin
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -84,18 +93,21 @@ autoload -U compinit && compinit
 source $ZSH/oh-my-zsh.sh
 
 source <(fzf --zsh)
+
 alias cd="z"
 
 # Changing "exa" to "eza"
 
 alias ls="eza -lh --icons --color=always --group-directories-first"
-#
-alias la="eza -lha@ --icons --color=always --group-directories-first"
-#
-alias lt="eza -lhT --level=3 --icons --color=always --group-directories-first"
-#
 
-alias upt="sudo pacman -Syu --noconfirm && yay -Syu --answerclean All --answerdiff None --removemake --cleanafter && yay --sysupgrade --answerclean All --answerdiff None --cleanafter --removemake && sudo pacman -Syyu --noconfirm && sudo pacman -Rs $(pacman -Qdtq) --noconfirm && yay -Yc"
+alias la="eza -lha@ --icons --color=always --group-directories-first"
+
+alias lt="eza -lhT --level=3 --icons --color=always --group-directories-first"
+
+alias upt="sudo pacman -Syyu --noconfirm && yay -Syu --noconfirm --answerclean All --answerdiff None --removemake --cleanafter && sudo pacman -Rnsc $(pacman -Qdtq) --noconfirm && sudo paccache -r && sudo pacman -Dk && sudo pacman -Scc --noconfirm && sudo pacman -Fy && sudo pacman --noconfirm --needed -S base-devel && yay -Sc --noconfirm"
+
+alias s-diana="ssh -p 22 diana@192.168.0.7"
+alias s-server="ssh -p 8022 u0_a195@192.168.0.5"
 
 alias poff="systemctl poweroff"
 alias reboot="systemctl reboot"
@@ -126,11 +138,17 @@ export ARCHFLAGS="-arch x86_64"
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zshconfig="code ~/.zshrc"
+alias zshconfig="lvim ~/.zshrc"
 alias rzsh="source ~/.zshrc"
-alias ohmyzsh="code ~/.oh-my-zsh"
-alias weztermconfig="code ~/.config/wezterm/"
-alias wallpapers="dolphin ~/Descargas/wallpapers"
+alias ohmyzsh="lvim ~/.oh-my-zsh"
+alias weztermconfig="lvim ~/.config/wezterm/"
+alias kittyconfig="lvim ~/.config/kitty/kitty.conf"
+alias hyperconfig="lvim ~/.hyper.js"
+alias lvimconfig="lvim ~/.config/lvim/config.lua"
+alias wallpapers="cd ~/Pictures/wallpapers && dolphin ~/Pictures/wallpapers"
+alias espansoshow="bat /home/giamp/.config/espanso/match/base.yml"
+alias espansoconfig="lvim /home/giamp/.config/espanso/match/base.yml"
+alias xc="xclip -select clipboard"
 # pnpm
 export PNPM_HOME="/home/giamp/.local/share/pnpm"
 case ":$PATH:" in
@@ -140,24 +158,23 @@ esac
 # pnpm end
 
 # buscar paquetes:
-function rm() {
+function rmv() {
      # Verifica si se proporcionaron argumentos
     if [ $# -eq 0 ]; then
         echo "Usage: rm <file> [...<file>]"
         return 1
-    fi    
+    fi
 
     # Itera sobre cada argumento proporcionado
     for file in "$@"; do
         if [ -e "$file" ]; then
             # Mueve el archivo al directorio de destino
-            mv "$file" -t ~/.deleted/ 
+            mv "$file" -t ~/.deleted/
             echo "Deleted '$file' (moved to ~/.deleted/)"
         else
             echo "Error: '$file' not found"
         fi
     done
-
 }
 
 
@@ -184,9 +201,11 @@ function S() {
 
 # buscar paquetes
 
+source <(ng completion script)
 eval "$(zoxide init zsh)"
+eval "$(luarocks path)"
 
-fastfetch
+# fastfetch
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -194,3 +213,12 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+
+# Load Angular CLI autocompletion.
+
+# bun completions
+[ -s "/home/giamp/.bun/_bun" ] && source "/home/giamp/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
