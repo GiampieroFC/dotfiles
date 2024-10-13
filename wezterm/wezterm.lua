@@ -41,7 +41,7 @@ config.font = wezterm.font(
   }
 )
 -- (AKA: FiraCode Nerd Font Mono Ret) /usr/share/fonts/TTF/FiraCodeNerdFontMono-Retina.ttf, FontConfig
-config.font_size = 11.0
+config.font_size = 13.0
 
 -- Tabs
 -- config.enable_tab_bar = false
