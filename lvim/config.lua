@@ -44,6 +44,10 @@ lspconfig.svelte.setup {
 
 lvim.plugins = {
   {
+    'Exafunction/codeium.vim',
+    event = 'BufEnter'
+  },
+  {
     "neanias/everforest-nvim",
     version = false,
     lazy = false,
